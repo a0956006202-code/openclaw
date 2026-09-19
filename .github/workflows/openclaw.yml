@@ -1,10 +1,12 @@
-name: OpenClaw Auto Workflow
+name: OpenClaw Automation
 
 on:
   schedule:
-    # 每天 UTC 00:00 執行，也就是台灣時間上午 8:00。
-    - cron: "0 0 * * *"
+    - cron: '0 0 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   run-openclaw:
@@ -16,10 +18,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: '3.10'
+          cache: pip
 
       - name: Install dependencies
-        run: python -m pip install requests
+        run: python -m pip install -r requirements.txt
 
-      - name: Run OpenClaw main script
+      - name: Run automation script
+        env:
+          GEMINI_API_KEY: '${{ secrets.GEMINI_API_KEY }}'
+          LINE_CHANNEL_ACCESS_TOKEN: '${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}'
+          LINE_USER_ID: '${{ secrets.LINE_USER_ID }}'
+          GEMINI_MODEL: gemini-3.8-live
         run: python main.py

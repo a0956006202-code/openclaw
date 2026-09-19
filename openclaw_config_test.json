@@ -1,0 +1,8 @@
+{
+    "skills": {
+        "resume-optimizer": {
+            "outputPath": "/mnt/user-data/outputs/",
+            "format": "chronological"
+        }
+    }
+}
