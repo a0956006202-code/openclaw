@@ -1,0 +1,48 @@
+import json
+from pathlib import Path
+
+
+FULL_AUTOMATION_CONFIG = {
+    "system_name": "OpenClaw 24/7 Full Automation Suite",
+    "status": "Activated",
+    "modules": {
+        "monitor_and_logging": {
+            "file": "openclaw_monitor.py",
+            "function": "safe_run (自動例外重試與日誌記錄)",
+        },
+        "line_active_push": {
+            "file": "line_push.py",
+            "function": "send_line_message (主動推播與即時互動)",
+        },
+        "automation_strategies": [
+            {
+                "mode": "AI 代理與聊天機器人整合 (如 Manus 結合 LINE)",
+                "description": "直接在通訊軟體中執行多步驟任務與檔案處理",
+            },
+            {
+                "mode": "自動化工作流程平台 (如 Make、Zapier、n8n)",
+                "description": "串接 Gmail、雲端硬碟、LINE 與 Notion 實現無縫自動化",
+            },
+            {
+                "mode": "內建指令與腳本 (如 Python / GAS)",
+                "description": "處理自訂排程、郵件分類與資料更新",
+            },
+        ],
+    },
+}
+
+
+def write_full_automation_config(
+    output_path: str = "openclaw_full_automation_active.json",
+) -> Path:
+    path = Path(output_path)
+    path.write_text(
+        json.dumps(FULL_AUTOMATION_CONFIG, indent=4, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    print(f"全自動化核心指令已成功寫入：{path}")
+    return path
+
+
+if __name__ == "__main__":
+    write_full_automation_config()

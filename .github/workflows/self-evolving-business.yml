@@ -1,0 +1,30 @@
+name: OpenClaw Self-Evolving Business Review
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  propose-mvp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Generate reviewable MVP proposals
+        run: python self_evolving_business.py propose data/ai/market-signals.json
+
+      - name: Store proposals for operator review
+        uses: actions/upload-artifact@v4
+        with:
+          name: self-evolving-mvp-proposals
+          path: data/ai/self-evolving/

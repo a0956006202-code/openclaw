@@ -1,0 +1,32 @@
+name: OpenClaw Data Sovereignty Backup
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install backup tools
+        run: sudo apt-get update && sudo apt-get install --yes age rclone
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Create encrypted backup
+        env:
+          BACKUP_AGE_RECIPIENT: ${{ secrets.BACKUP_AGE_RECIPIENT }}
+          BACKUP_RCLONE_DESTINATIONS: ${{ secrets.BACKUP_RCLONE_DESTINATIONS }}
+          BACKUP_NAS_PATH: ${{ secrets.BACKUP_NAS_PATH }}
+          BACKUP_IPFS_ENABLED: 'false'
+        run: python data_sovereignty_backup.py backup

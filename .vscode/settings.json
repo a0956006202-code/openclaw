@@ -1,0 +1,9 @@
+{
+    "github.copilot.advanced": {
+        "chatModel": "gpt-4o"
+    },
+    "chat.model.default": "gpt-4o",
+    "github.copilot.enable": {
+        "*": false
+    }
+}
