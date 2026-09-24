@@ -34,3 +34,10 @@ jobs:
         export BACKUP_AGE_RECIPIENT=$(echo "$BACKUP_AGE_RECIPIENT" | tr -d '[:space:]')
         python data_sovereignty_backup.py backup
     
+    - name: Create encrypted backup
+      env:
+        BACKUP_AGE_RECIPIENT: ${{ secrets.BACKUP_AGE_RECIPIENT }}
+        BACKUP_RCLONE_DESTINATIONS: ${{ secrets.BACKUP_RCLONE_DESTINATIONS }}
+        BACKUP_NAS_PATH: ${{ secrets.BACKUP_NAS_PATH }}
+        BACKUP_IPFS_ENABLED: 'false'
+      run: python data_sovereignty_backup.py backup
