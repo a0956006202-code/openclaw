@@ -29,4 +29,5 @@ jobs:
           BACKUP_RCLONE_DESTINATIONS: ${{ secrets.BACKUP_RCLONE_DESTINATIONS }}
           BACKUP_NAS_PATH: ${{ secrets.BACKUP_NAS_PATH }}
           BACKUP_IPFS_ENABLED: 'false'
+                    META_TOKEN: ''
         run: python data_sovereignty_backup.py backup
